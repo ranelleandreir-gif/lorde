@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kasipag Company Portal</title>
+
+<style>
+:root{
+  --bg:#0b1220;
+  --card:#111a2e;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --accent:#3b82f6;
+  --border:rgba(255,255,255,0.08);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 30px;
+  background:#0f172a;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+}
+
+.logo{
+  font-weight:600;
+  color:var(--accent);
+  letter-spacing:0.5px;
+}
+
+.btn{
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn:hover{
+  opacity:0.85;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:70px 20px;
+}
+
+.hero h1{
+  font-size:40px;
+  font-weight:600;
+}
+
+.hero p{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  padding:40px;
+}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+}
+
+/* CTA */
+.cta{
+  text-align:center;
+  padding:50px 20px;
+  background:#0f172a;
+  border-top:1px solid var(--border);
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+}
+
+.modal-box{
+  width:340px;
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.modal-box h3{
+  margin-bottom:10px;
+  font-weight:500;
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#0b1220;
+  color:white;
+  outline:none;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  color:var(--muted);
+}
+
+#msg{
+  font-size:12px;
+  margin-top:8px;
+  color:var(--muted);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero h1{font-size:28px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Kasipag Company Portal</div>
+  <button class="btn" onclick="openModal()">Create Account</button>
+</header>
+
+<section class="hero">
+  <h1>Internal Staff Management System</h1>
+  <p>Secure access for Cashiers, Riders, and Company Staff</p>
+
+  <a href="una.html">
+    <button class="btn">Enter System</button>
+  </a>
+</section>
+
+<section class="features">
+
+  <div class="card">
+    <h3>Loan Tracking</h3>
+    <p style="color:var(--muted);font-size:13px;">Monitor transactions in real-time.</p>
+  </div>
+
+  <div class="card">
+    <h3>Staff Management</h3>
+    <p style="color:var(--muted);font-size:13px;">Control roles and access securely.</p>
+  </div>
+
+  <div class="card">
+    <h3>Secure System</h3>
+    <p style="color:var(--muted);font-size:13px;">Protected internal company data.</p>
+  </div>
+
+</section>
+
+<section class="cta">
+  <h2>Company Access Portal</h2>
+  <p style="color:var(--muted);margin-top:8px;">For authorized personnel only</p>
+</section>
+
+<footer style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">
+  © 2026 Kasipag Internal System
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal()">✖</span>
+
+    <h3>Create Staff Account</h3>
+
+    <input id="name" placeholder="Full Name">
+    <input id="email" placeholder="Company Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <select id="role">
+      <option value="cashier">Cashier</option>
+      <option value="rider 1">Rider 1</option>
+      <option value="rider 2">Rider 2</option>
+      <option value="rider 3">Rider 3</option>
+    </select>
+
+    <button class="btn" onclick="signup()">Submit Request</button>
+
+    <p id="msg"></p>
+
+  </div>
+
+</div>
+
+<script>
+
+function openModal(){
+  modal.style.display="flex";
+}
+
+function closeModal(){
+  modal.style.display="none";
+}
+
+/* COMPANY SIGNUP FLOW */
+function signup(){
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let newUser = {
+    name:name.value,
+    email:email.value,
+    password:password.value,
+    role:role.value,
+    status:"pending"
+  };
+
+  users.push(newUser);
+  localStorage.setItem("users", JSON.stringify(users));
+
+  msg.innerHTML = "Request submitted. Waiting for HR approval...";
+  msg.style.color = "#9ca3af";
+
+  setTimeout(()=>{
+    alert("Submitted to HR ✔ Await confirmation");
+    closeModal();
+  },1200);
+
+}
+
+</script>
+
+</body>
+</html>
