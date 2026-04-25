@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rider Login</title>
+</head>
+<body>
+<h2>Rider Login</h2>
+<input id="u">
+<input id="p" type="password">
+<button onclick="login()">Login</button>
+<script>
+function login(){
+if(u.value==='rider' && p.value==='rider123'){
+localStorage.setItem('role','rider');
+location.href='dashboard.html';
+}else alert('Wrong');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cashier Login</title>
+</head>
+<body>
+<h2>Cashier Login</h2>
+<input id="u">
+<input id="p" type="password">
+<button onclick="login()">Login</button>
+<script>
+function login(){
+if(u.value==='cashier' && p.value==='cash123'){
+localStorage.setItem('role','cashier');
+location.href='dashboard.html';
+}else alert('Wrong');
+}
+</script>
+</body>
+</html>

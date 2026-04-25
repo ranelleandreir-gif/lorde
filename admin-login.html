@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<style>
+body{margin:0;background:#0f172a;color:white;display:flex;justify-content:center;align-items:center;height:100vh;}
+.box{background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);padding:40px;border-radius:20px;}
+input{display:block;width:100%;margin:10px 0;padding:10px;}
+button{width:100%;padding:10px;background:#ef4444;color:white;border:none;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Admin Login</h2>
+<input id="u" placeholder="Username">
+<input id="p" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+<script>
+function login(){
+if(u.value==='admin' && p.value==='admin123'){
+localStorage.setItem('role','admin');
+location.href='dashboard.html';
+}else alert('Wrong');
+}
+</script>
+</body>
+</html>

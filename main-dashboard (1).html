@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kasipag Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1220;
+  color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #111827;
+  position: fixed;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* LOGO */
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: white;
+  padding: 6px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* BRAND */
+.brand {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* ROLE */
+#roleText {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 15px;
+}
+
+/* MENU */
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  background: #1f2937;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: #374151;
+  transform: scale(1.03);
+}
+
+/* LOGOUT */
+.logout {
+  margin-top: auto;
+  background: #dc2626 !important;
+}
+
+/* MAIN */
+.main {
+  margin-left: 260px;
+  padding: 25px;
+}
+
+/* CARDS */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #24324a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+  <img src="/picture/download.png " class="logo" alt="Kasipag Logo">
+
+  <div class="brand">KASIPAG</div>
+
+  <p id="roleText"></p>
+
+  <div id="menu"></div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+  <h1>Dashboard</h1>
+
+  <div class="card-container">
+    <div class="card">Total Users</div>
+    <div class="card">Active Loans</div>
+    <div class="card">Payments</div>
+  </div>
+
+  <div id="content" class="card" style="margin-top:20px;">
+    Welcome to Kasipag System
+  </div>
+</div>
+
+<script>
+const role = localStorage.getItem("role");
+
+if (!role) {
+  window.location.href = "/index.html";
+}
+
+document.getElementById("roleText").innerText = "Role: " + role;
+
+const menu = document.getElementById("menu");
+const content = document.getElementById("content");
+
+/* ROLE SYSTEM */
+if (role === "admin") {
+  menu.innerHTML = `
+    <button onclick="load('Users')">Manage Users</button>
+    <button onclick="load('Reports')">Reports</button>
+  `;
+}
+else if (role === "rider") {
+  menu.innerHTML = `
+    <button onclick="load('Deliveries')">My Deliveries</button>
+    <button onclick="load('Status')">Update Status</button>
+  `;
+}
+else {
+  menu.innerHTML = `
+    <button onclick="load('Payments')">Payments</button>
+    <button onclick="load('History')">History</button>
+  `;
+}
+
+function load(page) {
+  content.innerHTML = `<h3>${page}</h3><p>Loading ${page} module...</p>`;
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "/index.html";
+}
+</script>
+
+</body>
+</html>
