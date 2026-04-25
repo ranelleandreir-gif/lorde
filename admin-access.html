@@ -1,58 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Access</title>
-  <style>
-    body{
-      font-family: Arial;
-      background:#0b1220;
-      color:#fff;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-    }
-    .box{
-      background:rgba(255,255,255,0.05);
-      padding:20px;
-      border-radius:12px;
-      width:300px;
-      text-align:center;
-    }
-    input, button{
-      width:100%;
-      padding:10px;
-      margin-top:10px;
-      border-radius:8px;
-      border:none;
-    }
-    button{
-      background:#3b82f6;
-      color:white;
-      cursor:pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Access</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1b2a4a, #0b1220);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* glass card */
+.box{
+  width:320px;
+  padding:25px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.15);
+  text-align:center;
+  color:white;
+  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* logo */
+.logo{
+  width:70px;
+  height:70px;
+  margin-bottom:10px;
+  border-radius:50%;
+  background:#fff;
+  display:inline-block;
+}
+
+/* inputs */
+input{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+  background:rgba(255,255,255,0.15);
+  color:white;
+}
+
+input::placeholder{
+  color:#ddd;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:#3b82f6;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#2563eb;
+}
+
+/* loading screen */
+.loading{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0b1220;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
+}
+
+.spinner{
+  width:60px;
+  height:60px;
+  border:5px solid rgba(255,255,255,0.2);
+  border-top:5px solid #3b82f6;
+  border-radius:50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+
+.loading p{
+  margin-top:15px;
+  letter-spacing:1px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="box">
+  <div class="logo"></div>
   <h2>Admin Access</h2>
+
   <input id="accessKey" type="password" placeholder="Enter Admin Key">
-  <button onclick="checkKey()">Enter</button>
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- loading screen -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p>Verifying Access...</p>
 </div>
 
 <script>
 const ADMIN_KEY = "KASIPAG-ADMIN-2026";
 
-function checkKey(){
+function login(){
   const key = document.getElementById("accessKey").value;
 
-  if(key === ADMIN_KEY){
+  if(key !== ADMIN_KEY){
+    alert("Invalid Access Key!");
+    return;
+  }
+
+  // show loading
+  document.getElementById("loading").style.display = "flex";
+
+  // simulate loading
+  setTimeout(() => {
     localStorage.setItem("role", "admin");
     window.location.href = "admin/dashboard.html";
-  } else {
-    alert("Wrong Access Key!");
-  }
+  }, 2500);
 }
 </script>
 
