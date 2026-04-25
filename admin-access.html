@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Access</title>
+  <style>
+    body{
+      font-family: Arial;
+      background:#0b1220;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+    .box{
+      background:rgba(255,255,255,0.05);
+      padding:20px;
+      border-radius:12px;
+      width:300px;
+      text-align:center;
+    }
+    input, button{
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      border-radius:8px;
+      border:none;
+    }
+    button{
+      background:#3b82f6;
+      color:white;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Admin Access</h2>
+  <input id="accessKey" type="password" placeholder="Enter Admin Key">
+  <button onclick="checkKey()">Enter</button>
+</div>
+
+<script>
+const ADMIN_KEY = "KASIPAG-ADMIN-2026";
+
+function checkKey(){
+  const key = document.getElementById("accessKey").value;
+
+  if(key === ADMIN_KEY){
+    localStorage.setItem("role", "admin");
+    window.location.href = "admin/dashboard.html";
+  } else {
+    alert("Wrong Access Key!");
+  }
+}
+</script>
+
+</body>
+</html>
