@@ -6,6 +6,15 @@
 <title>Kasipag Company Portal</title>
 
 <style>
+:root{
+  --bg:#0b1220;
+  --card:#111a2e;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --accent:#3b82f6;
+  --border:rgba(255,255,255,0.08);
+}
+
 *{
   margin:0;
   padding:0;
@@ -14,24 +23,12 @@
 }
 
 body{
-  background:#0b1220;
-  color:#e5e7eb;
-  height:100vh;
-  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
 }
 
-/* soft background glow (more subtle pro feel) */
-.bg-glow{
-  position:absolute;
-  width:520px;
-  height:520px;
-  background:radial-gradient(circle, #3b82f6 0%, transparent 70%);
-  opacity:.18;
-  top:-180px;
-  left:-180px;
-}
-
-/* loader (more minimal corporate style) */
+/* 🌟 LOADER */
 #loader{
   position:fixed;
   inset:0;
@@ -44,13 +41,12 @@ body{
 }
 
 .spinner{
-  width:54px;
-  height:54px;
-  border:4px solid rgba(255,255,255,0.12);
-  border-top:4px solid #3b82f6;
+  width:55px;
+  height:55px;
+  border:5px solid rgba(255,255,255,0.15);
+  border-top:5px solid var(--accent);
   border-radius:50%;
   animation:spin 1s linear infinite;
-  box-shadow:0 0 25px rgba(59,130,246,0.2);
 }
 
 @keyframes spin{
@@ -58,150 +54,294 @@ body{
 }
 
 #loader p{
-  margin-top:14px;
-  color:#94a3b8;
+  margin-top:12px;
+  color:var(--muted);
   font-size:13px;
-  letter-spacing:0.5px;
+  animation:pulse 1.2s infinite;
 }
 
-/* center layout */
-.container{
-  height:100vh;
+@keyframes pulse{
+  0%{opacity:0.4;}
+  50%{opacity:1;}
+  100%{opacity:0.4;}
+}
+
+/* HEADER */
+header{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
+  padding:16px 18px;
+  background:#0f172a;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
 }
 
-/* main card (more premium glass) */
-.card{
-  width:440px;
-  padding:38px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(22px);
-  border-radius:22px;
-  text-align:center;
-  box-shadow:
-    0 25px 70px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  animation:fade .7s ease;
-}
-
-@keyframes fade{
-  from{opacity:0; transform:translateY(18px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-/* logo upgraded (premium frame feel) */
+/* LOGO */
 .logo{
-  width:92px;
-  height:92px;
-  margin:0 auto 18px;
-  border-radius:20px;
-  overflow:hidden;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 30px rgba(59,130,246,0.35);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+  color:var(--accent);
 }
 
 .logo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  width:34px;
+  height:34px;
+  border-radius:8px;
 }
 
-/* title hierarchy improved */
-h1{
-  font-size:27px;
-  font-weight:700;
-  letter-spacing:0.3px;
-}
-
-p{
-  color:#94a3b8;
-  font-size:13px;
-  margin-top:6px;
-}
-
-/* buttons (more corporate style) */
+/* BUTTON */
 .btn{
-  width:100%;
-  margin-top:16px;
-  padding:12px;
+  padding:10px 14px;
   border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  background:linear-gradient(90deg,#3b82f6,#2563eb);
+  border-radius:8px;
+  background:var(--accent);
   color:white;
+  cursor:pointer;
   transition:.2s;
-  box-shadow:0 10px 25px rgba(59,130,246,0.15);
+  font-size:13px;
 }
 
-.btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 15px 35px rgba(59,130,246,0.25);
+.btn:active{
+  transform:scale(0.97);
 }
 
-/* secondary button */
-.secondary{
-  background:#111a2e;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:none;
+/* HERO */
+.hero{
+  text-align:center;
+  padding:50px 15px;
 }
 
-.secondary:hover{
-  background:#162033;
+.hero h1{
+  font-size:28px;
+  font-weight:600;
 }
 
-/* footer text */
-.small{
-  font-size:11px;
-  color:#6b7280;
-  margin-top:14px;
-  letter-spacing:0.2px;
+.hero p{
+  color:var(--muted);
+  margin-top:8px;
+  font-size:13px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  padding:18px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  transition:.2s;
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.card:active{
+  transform:scale(0.98);
+}
+
+/* CTA */
+.cta{
+  text-align:center;
+  padding:40px 15px;
+  background:#0f172a;
+  border-top:1px solid var(--border);
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.7);
+}
+
+.modal-box{
+  width:90%;
+  max-width:340px;
+  background:var(--card);
+  padding:18px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  animation:fadeUp .4s ease;
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#0b1220;
+  color:white;
+  outline:none;
+  font-size:13px;
+}
+
+/* LOADER BUTTON */
+#btnLoader{
+  display:none;
+  width:18px;
+  height:18px;
+  border:3px solid rgba(255,255,255,0.2);
+  border-top:3px solid white;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:10px auto;
+}
+
+/* TEXT */
+#msg{
+  font-size:12px;
+  margin-top:8px;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
-
-<!-- LOADER -->
+<!-- 🌟 LOADING SCREEN -->
 <div id="loader">
   <div class="spinner"></div>
-  <p>Initializing Kasipag System...</p>
+  <p>Loading Kasipag System...</p>
 </div>
 
-<!-- MAIN -->
-<div class="container">
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="logo">
+    Kasipag Portal
+  </div>
+  <button class="btn" onclick="openModal()">Create</button>
+</header>
+
+<section class="hero">
+  <h1>Internal Staff System</h1>
+  <p>Secure access for Cashier, Rider & Staff</p>
+
+  <a href="una.html">
+    <button class="btn" style="margin-top:15px;width:140px;">Enter</button>
+  </a>
+</section>
+
+<section class="features">
+
   <div class="card">
+    <h3>Loan Tracking</h3>
+    <p style="color:var(--muted);font-size:12px;">Monitor transactions in real-time.</p>
+  </div>
 
-    <div class="logo">
-      <img src="logo.png">
-    </div>
+  <div class="card">
+    <h3>Staff Management</h3>
+    <p style="color:var(--muted);font-size:12px;">Control roles and access securely.</p>
+  </div>
 
-    <h1>Kasipag Portal</h1>
-    <p>Internal Staff Management System</p>
+  <div class="card">
+    <h3>Secure System</h3>
+    <p style="color:var(--muted);font-size:12px;">Protected internal data system.</p>
+  </div>
 
-    <a href="una.html">
-      <button class="btn">Enter System</button>
-    </a>
+</section>
 
-    <button class="btn secondary" onclick="openModal()">Create Account</button>
+<section class="cta">
+  <h2 style="font-size:18px;">Company Portal</h2>
+  <p style="color:var(--muted);font-size:12px;">Authorized personnel only</p>
+</section>
 
-    <div class="small">Secure access for authorized personnel only</div>
+<footer style="text-align:center;padding:15px;color:var(--muted);font-size:11px;">
+  © 2026 Kasipag System
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <h3 style="font-size:16px;">Create Account</h3>
+
+    <input id="name" placeholder="Full Name">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <select id="role">
+      <option value="cashier">Cashier</option>
+      <option value="rider 1">Rider 1</option>
+      <option value="rider 2">Rider 2</option>
+      <option value="rider 3">Rider 3</option>
+    </select>
+
+    <button class="btn" onclick="signup()">Submit</button>
+
+    <div id="btnLoader"></div>
+    <p id="msg"></p>
 
   </div>
+
 </div>
 
 <script>
+
+/* LOADER */
 window.onload = () => {
   setTimeout(()=>{
     document.getElementById("loader").style.display="none";
-  },1100);
+  },1400);
 };
+
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+/* SIGNUP */
+function signup(){
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let newUser = {
+    name:name.value,
+    email:email.value,
+    password:password.value,
+    role:role.value,
+    status:"pending"
+  };
+
+  document.getElementById("btnLoader").style.display="block";
+
+  setTimeout(()=>{
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    msg.innerHTML = "Request sent. Waiting approval...";
+    msg.style.color = "#9ca3af";
+
+    document.getElementById("btnLoader").style.display="none";
+
+    setTimeout(()=>{
+      alert("Submitted ✔");
+      closeModal();
+    },700);
+
+  },1000);
+}
 </script>
 
 </body>
