@@ -71,7 +71,7 @@ header{
   top:0;
 }
 
-/* 🔥 LOGO */
+/* 🔥 LOGO FIXED */
 .logo{
   display:flex;
   align-items:center;
@@ -81,9 +81,11 @@ header{
 }
 
 .logo img{
-  width:35px;
-  height:35px;
-  border-radius:8px;
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  object-fit:cover;
+  box-shadow:0 0 15px rgba(59,130,246,0.4);
 }
 
 /* BUTTON */
@@ -105,12 +107,12 @@ header{
 /* HERO */
 .hero{
   text-align:center;
-  padding:70px 20px;
+  padding:80px 20px;
 }
 
 .hero h1{
-  font-size:40px;
-  font-weight:600;
+  font-size:42px;
+  font-weight:700;
 }
 
 .hero p{
@@ -128,20 +130,20 @@ header{
 
 .card{
   background:var(--card);
-  padding:20px;
-  border-radius:12px;
+  padding:22px;
+  border-radius:14px;
   border:1px solid var(--border);
   transition:.2s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-6px);
 }
 
 /* CTA */
 .cta{
   text-align:center;
-  padding:50px 20px;
+  padding:60px 20px;
   background:#0f172a;
   border-top:1px solid var(--border);
 }
@@ -153,15 +155,27 @@ header{
   display:none;
   justify-content:center;
   align-items:center;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(5px);
 }
 
 .modal-box{
   width:340px;
   background:var(--card);
   padding:20px;
-  border-radius:12px;
+  border-radius:14px;
   border:1px solid var(--border);
+  position:relative;
+}
+
+/* CLOSE BUTTON */
+.close{
+  position:absolute;
+  right:12px;
+  top:10px;
+  cursor:pointer;
+  color:var(--muted);
+  font-size:18px;
 }
 
 input,select{
@@ -175,7 +189,7 @@ input,select{
   outline:none;
 }
 
-/* SUBMIT LOADING */
+/* LOADER BUTTON */
 #btnLoader{
   display:none;
   width:18px;
@@ -184,10 +198,10 @@ input,select{
   border-top:3px solid white;
   border-radius:50%;
   animation:spin 1s linear infinite;
-  margin:auto;
+  margin:10px auto;
 }
 
-/* MODAL TEXT */
+/* MESSAGE */
 #msg{
   font-size:12px;
   margin-top:8px;
@@ -198,7 +212,7 @@ input,select{
 
 <body>
 
-<!-- 🔥 PAGE LOADING -->
+<!-- 🔥 LOADING SCREEN -->
 <div id="loader">
   <div class="spinner"></div>
   <p>Loading system...</p>
@@ -209,6 +223,7 @@ input,select{
     <img src="logo.png" alt="logo">
     Kasipag Portal
   </div>
+
   <button class="btn" onclick="openModal()">Create Account</button>
 </header>
 
@@ -254,6 +269,8 @@ input,select{
 
   <div class="modal-box">
 
+    <span class="close" onclick="closeModal()">✖</span>
+
     <h3>Create Staff Account</h3>
 
     <input id="name" placeholder="Full Name">
@@ -267,9 +284,7 @@ input,select{
       <option value="rider 3">Rider 3</option>
     </select>
 
-    <button class="btn" onclick="signup()">
-      Submit Request
-    </button>
+    <button class="btn" onclick="signup()">Submit Request</button>
 
     <div id="btnLoader"></div>
 
@@ -281,19 +296,19 @@ input,select{
 
 <script>
 
-/* PAGE LOADER */
+/* LOADER */
 window.onload = () => {
   setTimeout(()=>{
     document.getElementById("loader").style.display="none";
-  },1500);
+  },1200);
 };
 
 function openModal(){
-  modal.style.display="flex";
+  document.getElementById("modal").style.display="flex";
 }
 
 function closeModal(){
-  modal.style.display="none";
+  document.getElementById("modal").style.display="none";
 }
 
 /* SIGNUP */
@@ -326,7 +341,7 @@ function signup(){
       closeModal();
     },800);
 
-  },1200);
+  },1000);
 }
 </script>
 
