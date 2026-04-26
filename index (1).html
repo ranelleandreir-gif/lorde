@@ -28,6 +28,37 @@ body{
   overflow-x:hidden;
 }
 
+/* 🔥 LOADING SCREEN */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#0b1220;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:9999;
+}
+
+.spinner{
+  width:60px;
+  height:60px;
+  border:5px solid rgba(255,255,255,0.15);
+  border-top:5px solid var(--accent);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+
+#loader p{
+  margin-top:12px;
+  color:var(--muted);
+}
+
 /* HEADER */
 header{
   display:flex;
@@ -40,12 +71,22 @@ header{
   top:0;
 }
 
+/* 🔥 LOGO */
 .logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-weight:600;
   color:var(--accent);
-  letter-spacing:0.5px;
 }
 
+.logo img{
+  width:35px;
+  height:35px;
+  border-radius:8px;
+}
+
+/* BUTTON */
 .btn{
   padding:10px 16px;
   border:none;
@@ -58,6 +99,7 @@ header{
 
 .btn:hover{
   opacity:0.85;
+  transform:scale(1.05);
 }
 
 /* HERO */
@@ -93,7 +135,7 @@ header{
 }
 
 .card:hover{
-  transform:translateY(-3px);
+  transform:translateY(-5px);
 }
 
 /* CTA */
@@ -122,11 +164,6 @@ header{
   border:1px solid var(--border);
 }
 
-.modal-box h3{
-  margin-bottom:10px;
-  font-weight:500;
-}
-
 input,select{
   width:100%;
   padding:10px;
@@ -138,29 +175,40 @@ input,select{
   outline:none;
 }
 
-.close{
-  float:right;
-  cursor:pointer;
-  color:var(--muted);
+/* SUBMIT LOADING */
+#btnLoader{
+  display:none;
+  width:18px;
+  height:18px;
+  border:3px solid rgba(255,255,255,0.2);
+  border-top:3px solid white;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
 }
 
+/* MODAL TEXT */
 #msg{
   font-size:12px;
   margin-top:8px;
   color:var(--muted);
-}
-
-/* RESPONSIVE */
-@media(max-width:600px){
-  .hero h1{font-size:28px;}
 }
 </style>
 </head>
 
 <body>
 
+<!-- 🔥 PAGE LOADING -->
+<div id="loader">
+  <div class="spinner"></div>
+  <p>Loading system...</p>
+</div>
+
 <header>
-  <div class="logo">Kasipag Company Portal</div>
+  <div class="logo">
+    <img src="logo.png" alt="logo">
+    Kasipag Portal
+  </div>
   <button class="btn" onclick="openModal()">Create Account</button>
 </header>
 
@@ -206,8 +254,6 @@ input,select{
 
   <div class="modal-box">
 
-    <span class="close" onclick="closeModal()">✖</span>
-
     <h3>Create Staff Account</h3>
 
     <input id="name" placeholder="Full Name">
@@ -221,7 +267,11 @@ input,select{
       <option value="rider 3">Rider 3</option>
     </select>
 
-    <button class="btn" onclick="signup()">Submit Request</button>
+    <button class="btn" onclick="signup()">
+      Submit Request
+    </button>
+
+    <div id="btnLoader"></div>
 
     <p id="msg"></p>
 
@@ -231,6 +281,13 @@ input,select{
 
 <script>
 
+/* PAGE LOADER */
+window.onload = () => {
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+  },1500);
+};
+
 function openModal(){
   modal.style.display="flex";
 }
@@ -239,7 +296,7 @@ function closeModal(){
   modal.style.display="none";
 }
 
-/* COMPANY SIGNUP FLOW */
+/* SIGNUP */
 function signup(){
 
   let users = JSON.parse(localStorage.getItem("users")) || [];
@@ -252,19 +309,25 @@ function signup(){
     status:"pending"
   };
 
-  users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
-
-  msg.innerHTML = "Request submitted. Waiting for HR approval...";
-  msg.style.color = "#9ca3af";
+  document.getElementById("btnLoader").style.display="block";
 
   setTimeout(()=>{
-    alert("Submitted to HR ✔ Await confirmation");
-    closeModal();
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    msg.innerHTML = "Request submitted. Waiting for HR approval...";
+    msg.style.color = "#9ca3af";
+
+    document.getElementById("btnLoader").style.display="none";
+
+    setTimeout(()=>{
+      alert("Submitted to HR ✔ Await confirmation");
+      closeModal();
+    },800);
+
   },1200);
-
 }
-
 </script>
 
 </body>
