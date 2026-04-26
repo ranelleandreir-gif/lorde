@@ -1,29 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Admin Login</title>
+
 <style>
-body{margin:0;background:#0f172a;color:white;display:flex;justify-content:center;align-items:center;height:100vh;}
-.box{background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);padding:40px;border-radius:20px;}
-input{display:block;width:100%;margin:10px 0;padding:10px;}
-button{width:100%;padding:10px;background:#ef4444;color:white;border:none;}
+*{
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b,#0b1220);
+  overflow:hidden;
+}
+
+/* floating glow */
+body::before{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:#ef4444;
+  filter:blur(150px);
+  opacity:.3;
+  border-radius:50%;
+  top:-100px;
+  left:-100px;
+}
+
+.box{
+  width:320px;
+  padding:35px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  text-align:center;
+  animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+  from{transform:translateY(20px);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  outline:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+}
+
+input::placeholder{
+  color:#cbd5e1;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ef4444,#f97316);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+  position:relative;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+/* loading spinner */
+.spinner{
+  width:18px;
+  height:18px;
+  border:3px solid rgba(255,255,255,0.3);
+  border-top:3px solid white;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  display:none;
+  margin:auto;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
 </style>
 </head>
+
 <body>
+
 <div class="box">
-<h2>Admin Login</h2>
-<input id="u" placeholder="Username">
-<input id="p" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
+  <h2>Admin Login</h2>
+
+  <input id="u" placeholder="Username">
+  <input id="p" type="password" placeholder="Password">
+
+  <button onclick="login()" id="btn">
+    <span id="text">Login</span>
+    <div class="spinner" id="spin"></div>
+  </button>
 </div>
+
 <script>
 function login(){
-if(u.value==='admin' && p.value==='admin123'){
-localStorage.setItem('role','admin');
-location.href='admin-dashboard.html';
-}else alert('Wrong');
+  const u = document.getElementById('u');
+  const p = document.getElementById('p');
+  const btn = document.getElementById('btn');
+  const text = document.getElementById('text');
+  const spin = document.getElementById('spin');
+
+  // loading state
+  btn.disabled = true;
+  text.style.display = "none";
+  spin.style.display = "block";
+
+  setTimeout(() => {
+    if(u.value === 'admin' && p.value === 'admin123'){
+      localStorage.setItem('role','admin');
+      window.location.href = 'admin-dashboard.html';
+    } else {
+      alert('Wrong username or password');
+      btn.disabled = false;
+      text.style.display = "block";
+      spin.style.display = "none";
+    }
+  }, 1500);
 }
 </script>
+
 </body>
 </html>

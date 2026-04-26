@@ -1,82 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Kasipag Login</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body {
+*{
   margin:0;
-  font-family:'Inter', Arial, sans-serif;
-  background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter', sans-serif;
+}
+
+body{
   height:100vh;
-  color:#f1f5f9;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b,#0b1220);
+  overflow:hidden;
+  color:#fff;
 }
 
-.box {
-  background:linear-gradient(145deg, #1e293b 0%, #334155 100%);
-  padding:40px;
-  border-radius:20px;
+/* glow effect */
+body::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:#3b82f6;
+  filter:blur(160px);
+  opacity:.25;
+  border-radius:50%;
+  top:-150px;
+  right:-150px;
+}
+
+.box{
   width:380px;
+  padding:40px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
   text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  animation:fadeIn .8s ease;
 }
 
-.logo-icon {
-  width:80px;
-  height:80px;
-  margin:0 auto 25px;
-  background:linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  border-radius:20px;
+@keyframes fadeIn{
+  from{transform:translateY(20px);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+
+.logo-icon{
+  width:75px;
+  height:75px;
+  margin:0 auto 20px;
+  background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+  border-radius:18px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:40px;
+  font-size:34px;
+  box-shadow:0 10px 30px rgba(59,130,246,0.4);
 }
 
-h2 {
-  font-size:28px;
-  margin-bottom:10px;
+h2{
+  font-size:26px;
 }
 
-.subtitle {
-  font-size:14px;
+.subtitle{
+  font-size:13px;
   color:#94a3b8;
   margin-bottom:20px;
 }
 
-input {
+input{
   width:100%;
   padding:14px;
-  margin:10px 0;
-  border-radius:10px;
+  margin:8px 0;
   border:none;
+  outline:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  color:#fff;
 }
 
-button {
+input::placeholder{
+  color:#cbd5e1;
+}
+
+button{
   width:100%;
   padding:14px;
-  margin-top:15px;
+  margin-top:10px;
   border:none;
   border-radius:10px;
-  background:#3b82f6;
-  color:white;
-  font-weight:bold;
   cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+  position:relative;
 }
 
-.admin-btn {
-  background:#0ea5e9;
+.login-btn{
+  background:linear-gradient(90deg,#3b82f6,#1d4ed8);
+  color:white;
 }
 
-.footer-text {
+.admin-btn{
+  background:linear-gradient(90deg,#0ea5e9,#0369a1);
+  color:white;
+}
+
+button:hover{
+  transform:scale(1.04);
+}
+
+/* spinner */
+.spinner{
+  width:18px;
+  height:18px;
+  border:3px solid rgba(255,255,255,0.3);
+  border-top:3px solid white;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  display:none;
+  margin:auto;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+
+.footer-text{
   font-size:12px;
   color:#64748b;
-  margin-top:20px;
+  margin-top:18px;
 }
 </style>
 </head>
@@ -84,6 +147,7 @@ button {
 <body>
 
 <div class="box">
+
   <div class="logo-icon">🔐</div>
   <h2>Kasipag Login</h2>
   <div class="subtitle">Access your dashboard</div>
@@ -91,72 +155,83 @@ button {
   <input id="username" placeholder="Username">
   <input id="password" type="password" placeholder="Password">
 
-  <button onclick="login()">Login</button>
+  <button class="login-btn" onclick="login()" id="loginBtn">
+    <span id="loginText">Login</span>
+    <div class="spinner" id="spin"></div>
+  </button>
 
-  <!-- 🔥 ADMIN BUTTON -->
-  <button class="admin-btn" onclick="goAdmin()">Login as Admin</button>
+  <button class="admin-btn" onclick="goAdmin()" id="adminBtn">
+    Login as Admin
+  </button>
 
   <div class="footer-text">Demo: rider1 / rider123</div>
+
 </div>
 
 <script>
 const accounts = {
-  admin:   { user: "admin",   pass: "admin123" },
+  admin:   { user: "admin", pass: "admin123" },
 
-  rider1:  { user: "rider1",  pass: "rider123" },
-  rider2:  { user: "rider2",  pass: "rider123" },
-  rider3:  { user: "rider3",  pass: "rider123" },
+  rider1:  { user: "rider1", pass: "rider123" },
+  rider2:  { user: "rider2", pass: "rider123" },
+  rider3:  { user: "rider3", pass: "rider123" },
 
   cashier: { user: "cashier", pass: "cash123" }
 };
 
-// 🔐 ADMIN ACCESS KEY
 const ADMIN_KEY = "KASIPAG-2026";
 
-// NORMAL LOGIN (RIDER + CASHIER)
-function login() {
-  const u = document.getElementById("username").value.trim();
-  const p = document.getElementById("password").value.trim();
+function login(){
+  const u = document.getElementById("username");
+  const p = document.getElementById("password");
+  const btn = document.getElementById("loginBtn");
+  const text = document.getElementById("loginText");
+  const spin = document.getElementById("spin");
 
-  let foundRole = null;
+  btn.disabled = true;
+  text.style.display = "none";
+  spin.style.display = "block";
 
-  for (const role in accounts) {
-    if (accounts[role].user === u && accounts[role].pass === p) {
-      foundRole = role;
-      break;
+  setTimeout(() => {
+
+    let foundRole = null;
+
+    for (const role in accounts) {
+      if (accounts[role].user === u.value && accounts[role].pass === p.value) {
+        foundRole = role;
+        break;
+      }
     }
-  }
 
-  if (!foundRole) {
-    alert("Invalid username or password");
-    return;
-  }
+    if (!foundRole) {
+      alert("Invalid username or password");
 
-  // ❌ BLOCK ADMIN HERE
-  if (foundRole === "admin") {
-    alert("Use 'Login as Admin' button");
-    return;
-  }
+      btn.disabled = false;
+      text.style.display = "block";
+      spin.style.display = "none";
+      return;
+    }
 
-  localStorage.setItem("role", foundRole);
+    if (foundRole === "admin") {
+      alert("Use Admin Login button");
 
-  // 🚀 REDIRECT USERS
-  if (foundRole === "rider1") {
-    window.location.href = "/rider1-dashboard.html";
-  }
-  else if (foundRole === "rider2") {
-    window.location.href = "/rider2-dashboard.html";
-  }
-  else if (foundRole === "rider3") {
-    window.location.href = "/rider3-dashboard.html";
-  }
-  else if (foundRole === "cashier") {
-    window.location.href = "/cashier-dashboard.html";
-  }
+      btn.disabled = false;
+      text.style.display = "block";
+      spin.style.display = "none";
+      return;
+    }
+
+    localStorage.setItem("role", foundRole);
+
+    if (foundRole === "rider1") window.location.href = "/rider1-dashboard.html";
+    if (foundRole === "rider2") window.location.href = "/rider2-dashboard.html";
+    if (foundRole === "rider3") window.location.href = "/rider3-dashboard.html";
+    if (foundRole === "cashier") window.location.href = "/cashier-dashboard.html";
+
+  }, 1200);
 }
 
-// 🔥 ADMIN LOGIN BUTTON FUNCTION
-function goAdmin() {
+function goAdmin(){
   let user = prompt("Admin Username:");
   let pass = prompt("Admin Password:");
 
@@ -165,7 +240,7 @@ function goAdmin() {
     let key = prompt("Enter Admin Access Key:");
 
     if (key === ADMIN_KEY) {
-      localStorage.setItem("role", "admin");
+      localStorage.setItem("role","admin");
       window.location.href = "/admin-dashboard.html";
     } else {
       alert("Invalid Access Key!");
@@ -176,9 +251,9 @@ function goAdmin() {
   }
 }
 
-// ENTER KEY SUPPORT
-document.getElementById("password").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") login();
+// enter key support
+document.getElementById("password").addEventListener("keypress", function(e){
+  if(e.key === "Enter") login();
 });
 </script>
 
