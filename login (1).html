@@ -2,257 +2,701 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Kasipag Login</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kasipag - Microfinancing Platform</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter', sans-serif;
+:root {
+  --bg: #0f172a;
+  --bg-light: #1a2847;
+  --surface: rgba(20, 32, 56, 0.95);
+  --surface-strong: rgba(15, 23, 42, 0.98);
+  --text: #f0f4f8;
+  --text-secondary: #cbd5e1;
+  --muted: #94a3b8;
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --accent-dark: #1e40af;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #06b6d4;
 }
 
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#0f172a,#1e293b,#0b1220);
-  overflow:hidden;
-  color:#fff;
+* {
+  box-sizing: border-box;
 }
 
-body::before{
-  content:"";
-  position:absolute;
-  width:500px;
-  height:500px;
-  background:#3b82f6;
-  filter:blur(160px);
-  opacity:.25;
-  border-radius:50%;
-  top:-150px;
-  right:-150px;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-.box{
-  width:380px;
-  padding:40px;
-  border-radius:22px;
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 20px 60px rgba(0,0,0,0.5);
-  text-align:center;
-  animation:fadeIn .8s ease;
+body {
+  min-height: 100vh;
+  color: var(--text);
+  background: linear-gradient(135deg, #0f172a 0%, #1a2847 50%, #0f172a 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
 }
 
-@keyframes fadeIn{
-  from{transform:translateY(20px);opacity:0;}
-  to{transform:translateY(0);opacity:1;}
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* 🔥 LOGO IMAGE STYLE */
-.logo-icon{
-  width:85px;
-  height:85px;
-  margin:0 auto 20px;
-  border-radius:18px;
-  overflow:hidden;
-  background:rgba(255,255,255,0.08);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 10px 30px rgba(59,130,246,0.4);
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  font-size: 1.35rem;
+  color: var(--text);
+  text-transform: uppercase;
 }
 
-.logo-icon img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: radial-gradient(circle at 25% 25%, #facc15 0%, #fde68a 24%, #14b8a6 54%, #0ea5e9 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.35);
 }
 
-h2{
-  font-size:26px;
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.subtitle{
-  font-size:13px;
-  color:#94a3b8;
-  margin-bottom:20px;
+.brand-text {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text);
 }
 
-input{
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border:none;
-  outline:none;
-  border-radius:10px;
-  background:rgba(255,255,255,0.08);
-  color:#fff;
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 24px rgba(59, 130, 246, 0.6); }
+  50% { box-shadow: 0 0 36px rgba(59, 130, 246, 0.8); }
 }
 
-input::placeholder{
-  color:#cbd5e1;
+.nav-buttons {
+  display: flex;
+  gap: 16px;
 }
 
-button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-  transition:0.3s;
+.button,
+.button-secondary {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  text-transform: none;
 }
 
-.login-btn{
-  background:linear-gradient(90deg,#3b82f6,#1d4ed8);
-  color:white;
+.button {
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  color: white;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
 }
 
-.admin-btn{
-  background:linear-gradient(90deg,#0ea5e9,#0369a1);
-  color:white;
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.35);
 }
 
-button:hover{
-  transform:scale(1.04);
+.button-secondary {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.spinner{
-  width:18px;
-  height:18px;
-  border:3px solid rgba(255,255,255,0.3);
-  border-top:3px solid white;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  display:none;
-  margin:auto;
+.button-secondary:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+/* Hero Section */
+.hero {
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
 }
 
-@keyframes spin{
-  0%{transform:rotate(0);}
-  100%{transform:rotate(360deg);}
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.footer-text{
-  font-size:12px;
-  color:#64748b;
-  margin-top:18px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-  <!-- 🔥 LOGO IMAGE HERE -->
-  <div class="logo-icon">
-    <img src="logo.png" alt="Logo">
-  </div>
-
-  <h2>Kasipag Login</h2>
-  <div class="subtitle">Access your dashboard</div>
-
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
-
-  <button class="login-btn" onclick="login()" id="loginBtn">
-    <span id="loginText">Login</span>
-    <div class="spinner" id="spin"></div>
-  </button>
-
-  <button class="admin-btn" onclick="goAdmin()">
-    Login as Admin
-  </button>
-
-  <div class="footer-text">Demo: rider1 / rider123</div>
-
-</div>
-
-<script>
-const accounts = {
-  admin:   { user: "admin", pass: "admin123" },
-
-  rider1:  { user: "rider1", pass: "rider123" },
-  rider2:  { user: "rider2", pass: "rider123" },
-  rider3:  { user: "rider3", pass: "rider123" },
-
-  cashier: { user: "cashier", pass: "cash123" }
-};
-
-const ADMIN_KEY = "KASIPAG-2026";
-
-function login(){
-  const u = document.getElementById("username");
-  const p = document.getElementById("password");
-  const btn = document.getElementById("loginBtn");
-  const text = document.getElementById("loginText");
-  const spin = document.getElementById("spin");
-
-  btn.disabled = true;
-  text.style.display = "none";
-  spin.style.display = "block";
-
-  setTimeout(() => {
-
-    let foundRole = null;
-
-    for (const role in accounts) {
-      if (accounts[role].user === u.value && accounts[role].pass === p.value) {
-        foundRole = role;
-        break;
-      }
-    }
-
-    if (!foundRole) {
-      alert("Invalid username or password");
-      btn.disabled = false;
-      text.style.display = "block";
-      spin.style.display = "none";
-      return;
-    }
-
-    localStorage.setItem("role", foundRole);
-
-    if (foundRole === "rider1") window.location.href = "/rider1-dashboard.html";
-    if (foundRole === "rider2") window.location.href = "/rider2-dashboard.html";
-    if (foundRole === "rider3") window.location.href = "/rider3-dashboard.html";
-    if (foundRole === "cashier") window.location.href = "/cashier-dashboard.html";
-
-  }, 1200);
+.hero-copy h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-function goAdmin(){
-  let user = prompt("Admin Username:");
-  let pass = prompt("Admin Password:");
+.hero-copy p {
+  margin: 24px 0 0;
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+}
 
-  if (user === accounts.admin.user && pass === accounts.admin.pass) {
+.cta-button {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
 
-    let key = prompt("Enter Admin Access Key:");
+.cta-button .button {
+  padding: 14px 36px;
+  font-size: 1rem;
+}
 
-    if (key === ADMIN_KEY) {
-      localStorage.setItem("role","admin");
-      window.location.href = "/admin-dashboard.html";
-    } else {
-      alert("Invalid Access Key!");
-    }
+/* Features Grid */
+.features {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.05) 100%);
+}
 
-  } else {
-    alert("Invalid Admin Account!");
+.features-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.features-header h2 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.features-header p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  padding: 40px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.feature-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+/* CTA Section */
+.cta-section {
+  padding: 80px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.cta-section h2 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin: 0 0 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-section .button {
+  padding: 14px 40px;
+  font-size: 1rem;
+}
+
+.about {
+  padding: 60px 40px;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.05), rgba(59, 130, 246, 0.05));
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-card {
+  padding: 32px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(59, 130, 246, 0.14);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.about-card h2 {
+  margin: 0 0 16px;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.about-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+
+.modal.open {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-box {
+  width: min(520px, 100%);
+  background: linear-gradient(135deg, rgba(20, 32, 56, 0.95), rgba(15, 23, 42, 0.95));
+  border-radius: 16px;
+  padding: 40px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.modal-head h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.close {
+  border: none;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--accent-light);
+}
+
+/* Forms */
+.form-field {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-field input::placeholder {
+  color: var(--muted);
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: var(--accent-light);
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.note-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  header {
+    padding: 16px 24px;
+  }
+
+  .hero {
+    padding: 60px 24px;
+  }
+
+  .features {
+    padding: 60px 24px;
+  }
+
+  .cta-section {
+    padding: 60px 24px;
   }
 }
 
-document.getElementById("password").addEventListener("keypress", function(e){
-  if(e.key === "Enter") login();
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .nav-buttons .button,
+  .nav-buttons .button-secondary {
+    width: 100%;
+  }
+
+  .hero-copy h1 {
+    font-size: 2rem;
+  }
+
+  .hero-copy p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    flex-direction: column;
+  }
+
+  .cta-button .button {
+    width: 100%;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    padding: 30px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand"><span class="brand-logo"><img src="kasipag-logo.png" alt="Kasipag logo"></span><span class="brand-text">Kasipag</span></div>
+    <div class="nav-buttons">
+      <button class="button-secondary" onclick="openModal()">Create Account</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-copy">
+        <h1>Microfinancing Platform</h1>
+        <p>Secure, transparent, and efficient loan management for cashiers, riders, and staff</p>
+      </div>
+      <div class="cta-button">
+        <button class="button" onclick="enterSystem()">Enter System</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-grid">
+      <div class="about-card">
+        <h2>Our Vision</h2>
+        <p>To be a partner and known institution in Microfinancing and other NGO services, not only in Luzon but in the entire Philippines, by providing continuous financial assistance, promoting food security and environmental awareness, for a better way of living of people with integrity, hardworking, and well-disciplined in handling finances while caring for Mother Earth.</p>
+      </div>
+      <div class="about-card">
+        <h2>Our Mission</h2>
+        <p>Our mission is to help the common people increase their self-confidence by providing soft loans with low interest rates and longer repayment periods, involving them in taking care of the environment, and teaching them values such as integrity, cooperation, perseverance, planning, and saving for the future.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="features-header">
+      <h2>Key Features</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Real-Time Tracking</h3>
+        <p>Monitor transactions and payments with detailed analytics in real-time with data-backed insights</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Staff Management</h3>
+        <p>Manage roles, permissions, and access control for all team members securely</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Secure System</h3>
+        <p>Enterprise-grade security protecting all internal role parity data and transactions</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast Processing</h3>
+        <p>Quick approval workflows and confirmations with instant notifications</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Ready</h3>
+        <p>Responsive design works seamlessly on all devices and mobile platforms</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Smart Allocation</h3>
+        <p>Intelligent assignment system for optimal task distribution among riders</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Join thousands of businesses managing loans efficiently with Kasipag</p>
+    <button class="button" onclick="choosePortal('login')">Login to Dashboard</button>
+  </section>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Request a Staff Account</h3>
+      <button class="close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-field">
+      <label for="name">Full Name</label>
+      <input id="name" placeholder="Enter your name">
+    </div>
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="yourname@kasipag.local">
+    </div>
+    <div class="form-field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Create a password">
+    </div>
+    <div class="form-field">
+      <label for="role">Portal type</label>
+      <select id="role">
+        <option value="cashier">Cashier</option>
+        <option value="rider">Rider</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="button-secondary" onclick="closeModal()">Cancel</button>
+      <button class="button" onclick="signup()">Submit Request</button>
+    </div>
+    <p class="note-text" id="msg"></p>
+  </div>
+</div>
+
+<script>
+function enterSystem() {
+  choosePortal('admin');
+}
+
+function choosePortal(role) {
+  if (role === 'login') {
+    window.location.href = 'login (1).html';
+  } else {
+    localStorage.setItem('selectedRole', role);
+    window.location.href = 'login (1).html';
+  }
+}
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function signup() {
+  const fullName = document.getElementById('name').value.trim();
+  const emailAddress = document.getElementById('email').value.trim();
+  const passwordValue = document.getElementById('password').value.trim();
+  const selectedRole = document.getElementById('role').value;
+  const msg = document.getElementById('msg');
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+
+  if (!fullName || !emailAddress || !passwordValue) {
+    msg.textContent = 'Please fill in all fields.';
+    msg.style.color = '#ef4444';
+    return;
+  }
+  if (users.some(u => u.email.toLowerCase() === emailAddress.toLowerCase())) {
+    msg.textContent = 'An account with this email already exists.';
+    msg.style.color = '#ef4444';
+    return;
+  }
+  users.push({
+    name: fullName,
+    email: emailAddress,
+    password: passwordValue,
+    role: selectedRole,
+    status: 'pending'
+  });
+  localStorage.setItem('users', JSON.stringify(users));
+  msg.textContent = 'Request submitted. Waiting for admin approval.';
+  msg.style.color = '#10b981';
+  setTimeout(() => {
+    closeModal();
+    msg.textContent = '';
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('role').value = 'cashier';
+  }, 1200);
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('modal');
+  if (event.target === modal) {
+    closeModal();
+  }
 });
 </script>
-
 </body>
 </html>
+ 
